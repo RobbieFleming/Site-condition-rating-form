@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NZGTTM Site Assurance and Audit Form</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#00274d;--blue:#0057a8;--orange:#e07728;--red:#c0392b;
+  --light-blue:#e8f0fa;--gray-light:#f5f6f8;--border:#c5cad5;
+  --text:#1c1c1e;--text-muted:#4a4a5a;
+}
+body{font-family:Arial,Helvetica,sans-serif;font-size:9pt;color:var(--text);background:#c8cdd8;line-height:1.35}
+.page{width:210mm;margin:8mm auto;background:#fff;page-break-after:always;break-after:page}
+.page:last-child{page-break-after:auto;break-after:auto}
+
+/* HEADER */
+.form-header{background:var(--navy);display:flex;align-items:stretch}
+.hdr-logo{background:#fff;padding:5mm 7mm;display:flex;flex-direction:column;justify-content:center;min-width:42mm;border-right:3px solid var(--orange)}
+.logo-main{font-size:16pt;font-weight:900;color:var(--navy);letter-spacing:-0.5px;line-height:1}
+.logo-sub{font-size:5.5pt;font-weight:700;color:var(--orange);letter-spacing:1.5px;text-transform:uppercase;margin-top:0.8mm}
+.hdr-title{flex:1;padding:4mm 6mm;display:flex;flex-direction:column;justify-content:center}
+.hdr-main{font-size:13pt;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-0.2px}
+.hdr-sub{font-size:7pt;color:#90b4d8;margin-top:1.5mm;letter-spacing:0.2px}
+.hdr-ref{background:var(--orange);padding:4mm 7mm;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:28mm}
+.ref-lbl{font-size:5.5pt;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:1px}
+.ref-val{font-size:14pt;font-weight:900;color:#fff;line-height:1;text-align:center}
+
+/* SAFE SYSTEM STRIP */
+.ss-strip{background:#1a3a6b;display:flex;align-items:center;gap:3mm;padding:1.5mm 10mm;flex-wrap:wrap}
+.ss-lbl{font-size:6pt;color:#90b4d8;text-transform:uppercase;letter-spacing:.8px;font-weight:700;white-space:nowrap}
+.ss-div{width:1px;height:4mm;background:rgba(255,255,255,.2);flex-shrink:0}
+.ss-item{font-size:6pt;color:rgba(255,255,255,.6);white-space:nowrap}
+
+/* BODY */
+.form-body{padding:5mm 10mm 3mm 10mm}
+
+/* SECTION */
+.section{margin-bottom:3.5mm}
+.sec-head{background:var(--navy);color:#fff;display:flex;align-items:center;padding:1.5mm 4mm;gap:3mm}
+.sec-head.danger{background:#7b1212}
+.sec-badge{background:var(--orange);color:#fff;font-size:9pt;font-weight:900;width:6.5mm;height:6.5mm;display:flex;align-items:center;justify-content:center;border-radius:1px;flex-shrink:0;line-height:1}
+.sec-badge.danger{background:#c0392b}
+.sec-title{font-size:8.5pt;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.sec-note{margin-left:auto;font-size:6.5pt;color:rgba(255,255,255,.6);font-style:italic}
+
+/* DETAILS TABLE */
+.det-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-top:none}
+.det-table td{padding:1.8mm 3mm;border-right:1px solid var(--border);border-bottom:1px solid var(--border);vertical-align:middle;width:25%}
+.det-table td:last-child{border-right:none}
+.det-table tr:last-child td{border-bottom:none}
+.det-table td.full{width:100%}
+.flbl{font-size:6.5pt;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;display:inline-block;margin-right:1.5mm}
+.fline{display:inline-block;border-bottom:.8px solid #888;vertical-align:bottom;height:3.5mm}
+.fline-lg{width:calc(100% - 30mm)}
+.fline-md{width:calc(100% - 24mm)}
+.fline-sm{width:calc(100% - 18mm)}
+.fline-xs{width:calc(100% - 14mm)}
+
+/* ALERT BAR */
+.alert-bar{background:#fff3f3;border-top:2px solid var(--red);border-bottom:1px solid #f5b8b8;padding:1.5mm 4mm;font-size:7.5pt;color:#8b0000;font-weight:700;display:flex;align-items:center;gap:2mm}
+
+/* CHECKLIST TABLE */
+.chk-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-top:none}
+.chk-table thead tr{background:var(--light-blue)}
+.chk-table th{border:1px solid var(--border);padding:1mm 2mm;font-size:7.5pt;font-weight:700;color:var(--navy);text-align:center}
+.chk-table th.th-item{text-align:left;padding-left:3mm}
+.chk-table th.th-c{width:13mm}
+.chk-table td{border:1px solid #dde2ee;padding:1.2mm 2.5mm;font-size:8.5pt;vertical-align:middle}
+.chk-table tr:nth-child(even) td{background:#fafbfd}
+.chk-table td.tc{text-align:center;padding:.5mm}
+.chk-table input[type=checkbox]{width:11px;height:11px;cursor:pointer;accent-color:var(--navy)}
+
+/* SECTION COMPLIANCE FOOTER */
+.sec-comp{background:var(--gray-light);border:1px solid var(--border);border-top:1px solid #dde2ee;padding:1.5mm 3mm;display:flex;align-items:center;gap:4mm;flex-wrap:wrap}
+.sc-lbl{font-size:7pt;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;flex-shrink:0}
+.comp-opts{display:flex;gap:3.5mm;flex-wrap:wrap}
+.copt{display:flex;align-items:center;gap:1mm;font-size:7.5pt;cursor:pointer}
+.copt input[type=checkbox]{width:11px;height:11px;accent-color:var(--navy)}
+.c-ok{color:#1b6b3a;font-weight:600}
+.c-min{color:#7b5800;font-weight:600}
+.c-maj{color:#b84700;font-weight:600}
+.c-crit{color:#b71c1c;font-weight:700}
+
+/* NON-CONFORMANCE TABLE */
+.nc-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-top:none;font-size:7.5pt}
+.nc-table th{background:#e8f0fa;border:1px solid var(--border);padding:1.5mm 2mm;font-size:7pt;font-weight:700;color:var(--navy);text-align:center;line-height:1.25}
+.nc-table td{border:1px solid #dde2ee;padding:1mm 2mm;vertical-align:top;height:10mm}
+.nc-num{text-align:center;font-weight:700;background:#f0f3f8;width:7mm}
+.nc-desc{width:30%}
+.nc-risk{width:18mm}
+.nc-action{width:25%}
+.nc-person{width:18%}
+.nc-date{width:14mm}
+.nc-closed{width:15mm;text-align:center}
+
+/* OVERALL ASSESSMENT */
+.rating-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5mm;margin:2mm 0 3mm 0}
+.r-card{border:2px solid var(--border);padding:2.5mm 3mm;display:flex;align-items:flex-start;gap:2mm;border-radius:2px;cursor:pointer}
+.r-card input[type=checkbox]{width:13px;height:13px;margin-top:.5mm;flex-shrink:0;accent-color:var(--navy)}
+.r-txt{font-size:8pt;font-weight:700;line-height:1.25}
+.rc-ok{border-color:#2e7d32}.rc-ok .r-txt{color:#1b5e20}
+.rc-min{border-color:#f9a825}.rc-min .r-txt{color:#7b5800}
+.rc-maj{border-color:#e64a19}.rc-maj .r-txt{color:#b71c1c}
+.rc-crit{border-color:var(--red);background:#fff5f5}.rc-crit .r-txt{color:#8b0000}
+.assess-box{border:1px solid var(--border);border-top:none;padding:4mm}
+.flbl-sm{font-size:7pt;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.3px;display:block;margin:2.5mm 0 1mm 0}
+.comments-area{width:100%;border:1px solid var(--border);min-height:14mm;padding:2mm;font-family:Arial,sans-serif;font-size:8.5pt;resize:vertical;line-height:1.6}
+
+/* SIGN-OFF */
+.signoff-body{border:1px solid var(--border);border-top:none;padding:4mm;display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.so-box{border:1px solid var(--border);padding:3mm 4mm;background:#fafbfd}
+.so-title{font-size:8.5pt;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;padding-bottom:1.5mm;margin-bottom:2mm;border-bottom:2px solid var(--navy)}
+.so-field{display:flex;align-items:center;gap:2mm;margin-bottom:2mm}
+.so-lbl{font-size:6.5pt;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;min-width:16mm}
+.so-line{flex:1;border-bottom:.8px solid #999;height:4mm}
+.sig-box{border:1px solid #aaa;height:15mm;background:#fff;margin:1.5mm 0}
+.sig-lbl{font-size:6pt;color:#aaa;padding:1mm 2mm;display:block}
+
+/* FOOTER */
+.form-footer{background:var(--navy);padding:2mm 10mm;display:flex;align-items:center;justify-content:space-between}
+.ft-text{font-size:6.5pt;color:rgba(255,255,255,.55)}
+.ft-version{background:var(--orange);color:#fff;font-size:6pt;font-weight:700;padding:.5mm 2.5mm;letter-spacing:.5px}
+.ft-page{font-size:6.5pt;color:rgba(255,255,255,.4)}
+
+/* QUICK INSPECTION specific */
+.qi-header{background:var(--navy);display:flex;align-items:stretch}
+.qi-title-area{flex:1;padding:4mm 6mm;display:flex;flex-direction:column;justify-content:center}
+.qi-title{font-size:12pt;font-weight:800;color:#fff;line-height:1.1}
+.qi-sub{font-size:7pt;color:#90b4d8;margin-top:1mm}
+.qi-badge{background:var(--orange);padding:4mm 8mm;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.qi-badge-lbl{font-size:6pt;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:1px}
+.qi-badge-val{font-size:11pt;font-weight:900;color:#fff;line-height:1;text-align:center}
+
+.qi-body{padding:4mm 8mm 3mm 8mm}
+.qi-details{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--border);border-top:none;margin-bottom:3mm}
+.qi-det-row{display:contents}
+.qi-det-cell{padding:1.5mm 3mm;border-right:1px solid var(--border);border-bottom:1px solid var(--border);font-size:8pt}
+.qi-det-cell:last-child{border-right:none}
+.qi-sections{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-bottom:3mm}
+.qi-section{border:1px solid var(--border);border-radius:2px;overflow:hidden}
+.qi-sec-head{background:var(--navy);color:#fff;padding:1.5mm 3mm;font-size:7.5pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:2mm}
+.qi-sec-badge{background:var(--orange);color:#fff;font-size:7.5pt;font-weight:900;width:5.5mm;height:5.5mm;display:flex;align-items:center;justify-content:center;border-radius:1px;flex-shrink:0}
+.qi-sec-body{background:#fff;padding:1.5mm 2mm}
+.qi-item{display:flex;align-items:center;gap:2mm;padding:.7mm 1mm;border-bottom:1px solid #eee;font-size:7.5pt}
+.qi-item:last-child{border-bottom:none}
+.qi-item-txt{flex:1;line-height:1.25}
+.qi-cbs{display:flex;gap:1.5mm;flex-shrink:0}
+.qi-cb{display:flex;flex-direction:column;align-items:center;gap:.3mm;font-size:5.5pt;color:#666}
+.qi-cb input{width:9px;height:9px}
+
+.qi-assessment{border:1px solid var(--border);border-radius:2px;margin-bottom:3mm;overflow:hidden}
+.qi-assess-head{background:var(--navy);color:#fff;padding:1.5mm 3mm;font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.qi-assess-body{padding:3mm;display:grid;grid-template-columns:1fr 1fr;gap:3mm}
+
+.qi-rating-opts{display:flex;flex-direction:column;gap:1.5mm}
+.qi-ropt{display:flex;align-items:center;gap:2mm;font-size:8pt;cursor:pointer}
+.qi-ropt input{width:12px;height:12px;accent-color:var(--navy)}
+.qi-ok{color:#1b5e20;font-weight:600}
+.qi-min{color:#7b5800;font-weight:600}
+.qi-maj{color:#b84700;font-weight:600}
+.qi-crit{color:#b71c1c;font-weight:700}
+
+.qi-signoffs{display:grid;grid-template-columns:1fr 1fr;gap:3mm;border:1px solid var(--border);border-radius:2px;padding:3mm;overflow:hidden}
+
+/* PRINT */
+@media print{
+  body{background:#fff}
+  .page{margin:0;box-shadow:none;width:100%}
+  @page{size:A4 portrait;margin:8mm 10mm}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE 1 — HEADER + SECTIONS A & B
+     ============================================================ -->
+<div class="page">
+
+  <div class="form-header">
+    <div class="hdr-logo">
+      <div class="logo-main">NZGTTM</div>
+      <div class="logo-sub">New Zealand Guide to TTM</div>
+    </div>
+    <div class="hdr-title">
+      <div class="hdr-main">Site Assurance and Audit Form</div>
+      <div class="hdr-sub">Risk-Based Assessment &nbsp;·&nbsp; Safe System Approach &nbsp;·&nbsp; Replaces CoPTTM Site Condition Rating (SCR) Form</div>
+    </div>
+    <div class="hdr-ref">
+      <div class="ref-lbl">Form Ref</div>
+      <div class="ref-val">SAF-1.0</div>
+      <div class="ref-lbl" style="margin-top:1mm">NZGTTM</div>
+    </div>
+  </div>
+
+  <div class="ss-strip">
+    <span class="ss-lbl">Safe System</span>
+    <div class="ss-div"></div>
+    <span class="ss-item">Safe Roads &amp; Roadsides</span>
+    <div class="ss-div"></div>
+    <span class="ss-item">Safe Speeds</span>
+    <div class="ss-div"></div>
+    <span class="ss-item">Safe Vehicles</span>
+    <div class="ss-div"></div>
+    <span class="ss-item">Safe People</span>
+    <div class="ss-div"></div>
+    <span class="ss-item">Vulnerable Road Users</span>
+    <div class="ss-div"></div>
+    <span class="ss-item">Continuous Improvement</span>
+  </div>
+
+  <div class="form-body">
+
+    <!-- SECTION A: SITE DETAILS -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">A</span>
+        <span class="sec-title">Site Details</span>
+      </div>
+      <table class="det-table">
+        <tr>
+          <td colspan="2"><span class="flbl">RCA:</span><span class="fline fline-lg"></span></td>
+          <td colspan="2"><span class="flbl">Project Name:</span><span class="fline fline-lg"></span></td>
+        </tr>
+        <tr>
+          <td colspan="3"><span class="flbl">Road Name:</span><span class="fline" style="width:calc(100% - 26mm)"></span></td>
+          <td><span class="flbl">TGS / TMP No.:</span><span class="fline fline-sm"></span></td>
+        </tr>
+        <tr>
+          <td colspan="2"><span class="flbl">Location / Chainage:</span><span class="fline" style="width:calc(100% - 38mm)"></span></td>
+          <td><span class="flbl">STMS Name:</span><span class="fline fline-sm"></span></td>
+          <td><span class="flbl">Contact No.:</span><span class="fline fline-sm"></span></td>
+        </tr>
+        <tr>
+          <td><span class="flbl">GPS Coords:</span><span class="fline fline-sm"></span></td>
+          <td><span class="flbl">Date:</span><span class="fline fline-xs"></span></td>
+          <td><span class="flbl">Time:</span><span class="fline fline-xs"></span></td>
+          <td><span class="flbl">Weather:</span><span class="fline fline-sm"></span></td>
+        </tr>
+        <tr>
+          <td colspan="2"><span class="flbl">Auditor Name:</span><span class="fline" style="width:calc(100% - 30mm)"></span></td>
+          <td colspan="2"><span class="flbl">Company / Organisation:</span><span class="fline" style="width:calc(100% - 40mm)"></span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- SECTION B: IMMEDIATE SAFETY RISKS -->
+    <div class="section">
+      <div class="sec-head danger">
+        <span class="sec-badge danger">B</span>
+        <span class="sec-title">Immediate Safety Risks</span>
+        <span class="sec-note">⚠&nbsp; Any YES response requires immediate action before continuing the audit</span>
+      </div>
+      <div class="alert-bar">
+        <span style="font-size:11pt">⚠</span>
+        <span>If any risk is confirmed (YES), corrective action must be implemented immediately. Consider issuing a Stop Work if the risk cannot be controlled.</span>
+      </div>
+      <table class="chk-table">
+        <thead>
+          <tr>
+            <th class="th-item">Immediate Safety Risk</th>
+            <th class="th-c" style="color:#b71c1c">Risk<br>Present<br>(YES)</th>
+            <th class="th-c">Risk<br>Absent<br>(NO)</th>
+            <th class="th-c">Not<br>Applicable<br>(N/A)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Workers exposed to live traffic without adequate protection or separation</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Vehicle intrusion risk into the designated work area</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Inadequate physical separation between workers and live traffic</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Unsafe pedestrian route at or through the worksite</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Unsafe cyclist accommodation or route at or through the worksite</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Visibility issues — signs, signals or work area not adequately visible to approaching traffic</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Queue management issues — queues extending beyond safe sight distance</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Plant or equipment operating unsafely near live traffic or personnel</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Emergency access compromised — routes blocked or impeded</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+        </tbody>
+      </table>
+      <div class="sec-comp">
+        <span class="sc-lbl">Section B Assessment:</span>
+        <div class="comp-opts">
+          <label class="copt"><input type="checkbox"><span class="c-ok">Compliant</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-min">Minor Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-maj">Major Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-crit">Critical Risk / Stop Work</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION C: TRAFFIC MANAGEMENT LAYOUT -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">C</span>
+        <span class="sec-title">Traffic Management Layout</span>
+        <span class="sec-note">YES = Compliant &nbsp;|&nbsp; NO = Non-Conformance</span>
+      </div>
+      <table class="chk-table">
+        <thead>
+          <tr>
+            <th class="th-item">Checklist Item</th>
+            <th class="th-c">YES</th>
+            <th class="th-c">NO</th>
+            <th class="th-c">N/A</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Site layout matches the approved TGS / TMP</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Signs correctly positioned in accordance with the approved plan</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Signs are visible, legible, clean and free from obstruction</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Delineation (cones, drums, barriers) adequate and correctly spaced</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Tapers are appropriate for speed environment and site conditions</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Work area is clearly defined and separated from traffic lanes</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Traffic lanes are clearly guided through the worksite</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Temporary speed management is appropriate and compliant</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Access points are controlled and appropriately managed</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+        </tbody>
+      </table>
+      <div class="sec-comp">
+        <span class="sc-lbl">Section C Assessment:</span>
+        <div class="comp-opts">
+          <label class="copt"><input type="checkbox"><span class="c-ok">Compliant</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-min">Minor Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-maj">Major Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-crit">Critical Risk / Stop Work</span></label>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /form-body -->
+
+  <div class="form-footer">
+    <span class="ft-text">NZGTTM Site Assurance Form &mdash; For use by TMO, STMS, Corridor Managers and RCA Auditors</span>
+    <span class="ft-version">NZGTTM Site Assurance Form - Version 1.0</span>
+    <span class="ft-page">Page 1 of 3</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 2 — SECTIONS D, E, F & G
+     ============================================================ -->
+<div class="page">
+
+  <div class="form-header">
+    <div class="hdr-logo">
+      <div class="logo-main">NZGTTM</div>
+      <div class="logo-sub">New Zealand Guide to TTM</div>
+    </div>
+    <div class="hdr-title">
+      <div class="hdr-main">Site Assurance and Audit Form</div>
+      <div class="hdr-sub">Sections D – G &nbsp;·&nbsp; Vulnerable Road Users · Traffic Operations · Worksite Safety · Documentation</div>
+    </div>
+    <div class="hdr-ref">
+      <div class="ref-lbl">Form Ref</div>
+      <div class="ref-val">SAF-1.0</div>
+      <div class="ref-lbl" style="margin-top:1mm">NZGTTM</div>
+    </div>
+  </div>
+
+  <div class="form-body">
+
+    <!-- SECTION D: VULNERABLE ROAD USERS -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">D</span>
+        <span class="sec-title">Vulnerable Road Users</span>
+        <span class="sec-note">YES = Compliant &nbsp;|&nbsp; NO = Non-Conformance</span>
+      </div>
+      <table class="chk-table">
+        <thead>
+          <tr>
+            <th class="th-item">Checklist Item</th>
+            <th class="th-c">YES</th>
+            <th class="th-c">NO</th>
+            <th class="th-c">N/A</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>A continuous pedestrian route is provided through or around the worksite</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Pedestrian route is accessible — adequate width, surface and lighting</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Cyclist accommodation is provided and appropriate for the speed environment</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Pedestrian crossing facilities are adequate and clearly signed</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Mobility-impaired users have been considered — kerb ramps, tactile indicators, surfaces</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+        </tbody>
+      </table>
+      <div class="sec-comp">
+        <span class="sc-lbl">Section D Assessment:</span>
+        <div class="comp-opts">
+          <label class="copt"><input type="checkbox"><span class="c-ok">Compliant</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-min">Minor Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-maj">Major Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-crit">Critical Risk / Stop Work</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION E: TRAFFIC OPERATIONS -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">E</span>
+        <span class="sec-title">Traffic Operations</span>
+        <span class="sec-note">YES = Compliant &nbsp;|&nbsp; NO = Non-Conformance</span>
+      </div>
+      <table class="chk-table">
+        <thead>
+          <tr>
+            <th class="th-item">Checklist Item</th>
+            <th class="th-c">YES</th>
+            <th class="th-c">NO</th>
+            <th class="th-c">N/A</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Traffic flow is operating safely through and around the worksite</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Driver behaviour is appropriate — no evidence of aggressive or unsafe manoeuvres</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Traffic delays are within acceptable limits for site and road type</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Queue lengths are being managed effectively</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>No evidence of driver confusion — merge points and lane allocation are clear</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Sight distances are adequate at approach, through and exit zones</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+        </tbody>
+      </table>
+      <div class="sec-comp">
+        <span class="sc-lbl">Section E Assessment:</span>
+        <div class="comp-opts">
+          <label class="copt"><input type="checkbox"><span class="c-ok">Compliant</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-min">Minor Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-maj">Major Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-crit">Critical Risk / Stop Work</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION F: WORKSITE SAFETY -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">F</span>
+        <span class="sec-title">Worksite Safety</span>
+        <span class="sec-note">YES = Compliant &nbsp;|&nbsp; NO = Non-Conformance</span>
+      </div>
+      <table class="chk-table">
+        <thead>
+          <tr>
+            <th class="th-item">Checklist Item</th>
+            <th class="th-c">YES</th>
+            <th class="th-c">NO</th>
+            <th class="th-c">N/A</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Crew have been briefed on TM plan, hazards and emergency procedures</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>All personnel wearing appropriate PPE — hi-viz, footwear, head protection</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Plant and equipment operating safely — exclusion zones maintained</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Materials and equipment secured — no risk of entering traffic lanes</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Work area housekeeping is acceptable — debris, waste and materials managed</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Emergency procedures are understood by site personnel</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+        </tbody>
+      </table>
+      <div class="sec-comp">
+        <span class="sc-lbl">Section F Assessment:</span>
+        <div class="comp-opts">
+          <label class="copt"><input type="checkbox"><span class="c-ok">Compliant</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-min">Minor Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-maj">Major Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-crit">Critical Risk / Stop Work</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION G: DOCUMENTATION -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">G</span>
+        <span class="sec-title">Documentation</span>
+        <span class="sec-note">YES = Available &amp; Current &nbsp;|&nbsp; NO = Missing or Outdated</span>
+      </div>
+      <table class="chk-table">
+        <thead>
+          <tr>
+            <th class="th-item">Checklist Item</th>
+            <th class="th-c">YES</th>
+            <th class="th-c">NO</th>
+            <th class="th-c">N/A</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Current approved TGS / TMP is available at the worksite</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>All required permits are available and current</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>RCA approvals and consent conditions are available on site</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Daily TM records and site logs are completed and up to date</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Any changes to TM layout have been documented and approved</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+          <tr><td>Current risk assessment is available and reflects site conditions</td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td><td class="tc"><input type="checkbox"></td></tr>
+        </tbody>
+      </table>
+      <div class="sec-comp">
+        <span class="sc-lbl">Section G Assessment:</span>
+        <div class="comp-opts">
+          <label class="copt"><input type="checkbox"><span class="c-ok">Compliant</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-min">Minor Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-maj">Major Non-Conformance</span></label>
+          <label class="copt"><input type="checkbox"><span class="c-crit">Critical Risk / Stop Work</span></label>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /form-body -->
+
+  <div class="form-footer">
+    <span class="ft-text">NZGTTM Site Assurance Form &mdash; For use by TMO, STMS, Corridor Managers and RCA Auditors</span>
+    <span class="ft-version">NZGTTM Site Assurance Form - Version 1.0</span>
+    <span class="ft-page">Page 2 of 3</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 3 — SECTIONS H, I & J
+     ============================================================ -->
+<div class="page">
+
+  <div class="form-header">
+    <div class="hdr-logo">
+      <div class="logo-main">NZGTTM</div>
+      <div class="logo-sub">New Zealand Guide to TTM</div>
+    </div>
+    <div class="hdr-title">
+      <div class="hdr-main">Site Assurance and Audit Form</div>
+      <div class="hdr-sub">Sections H – J &nbsp;·&nbsp; Non-Conformances · Overall Assessment · Sign-Offs</div>
+    </div>
+    <div class="hdr-ref">
+      <div class="ref-lbl">Form Ref</div>
+      <div class="ref-val">SAF-1.0</div>
+      <div class="ref-lbl" style="margin-top:1mm">NZGTTM</div>
+    </div>
+  </div>
+
+  <div class="form-body">
+
+    <!-- SECTION H: NON-CONFORMANCES -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">H</span>
+        <span class="sec-title">Non-Conformances Identified</span>
+        <span class="sec-note">Complete for each NO response in Sections B – G</span>
+      </div>
+      <table class="nc-table">
+        <thead>
+          <tr>
+            <th class="nc-num">#</th>
+            <th class="nc-desc">Description of Non-Conformance</th>
+            <th class="nc-risk">Risk Level<br><span style="font-weight:400;font-size:6.5pt">(Low / Med / High / Critical)</span></th>
+            <th class="nc-action">Corrective Action Required</th>
+            <th class="nc-person">Responsible<br>Person</th>
+            <th class="nc-date">Due<br>Date</th>
+            <th class="nc-closed">Closed<br>Out ✓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="nc-row"><td class="nc-num">1</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="nc-row"><td class="nc-num">2</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="nc-row"><td class="nc-num">3</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="nc-row"><td class="nc-num">4</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="nc-row"><td class="nc-num">5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="nc-row"><td class="nc-num">6</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="nc-row"><td class="nc-num">7</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="nc-row"><td class="nc-num">8</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION I: OVERALL SITE ASSESSMENT -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">I</span>
+        <span class="sec-title">Overall Site Assessment</span>
+      </div>
+      <div class="assess-box">
+        <div style="font-size:7.5pt;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2mm">Overall Compliance Rating — select one:</div>
+        <div class="rating-cards">
+          <label class="r-card rc-ok">
+            <input type="checkbox">
+            <span class="r-txt">Compliant</span>
+          </label>
+          <label class="r-card rc-min">
+            <input type="checkbox">
+            <span class="r-txt">Minor<br>Non-Conformance</span>
+          </label>
+          <label class="r-card rc-maj">
+            <input type="checkbox">
+            <span class="r-txt">Major<br>Non-Conformance</span>
+          </label>
+          <label class="r-card rc-crit">
+            <input type="checkbox">
+            <span class="r-txt">Critical Risk /<br>Stop Work</span>
+          </label>
+        </div>
+
+        <span class="flbl-sm">Auditor Comments:</span>
+        <textarea class="comments-area" rows="3" placeholder="Record observations, context or commendations here..."></textarea>
+
+        <span class="flbl-sm">Immediate Actions Taken on Site:</span>
+        <textarea class="comments-area" rows="3" placeholder="Describe any corrective actions taken during or immediately following the audit..."></textarea>
+
+        <span class="flbl-sm">Follow-Up Required:</span>
+        <div style="display:flex;gap:5mm;align-items:center;margin-top:1mm">
+          <label class="copt"><input type="checkbox"><span style="font-size:8pt;font-weight:600">Yes — refer to Section H</span></label>
+          <label class="copt"><input type="checkbox"><span style="font-size:8pt;font-weight:600">No — site compliant</span></label>
+          <span style="font-size:7.5pt;color:#555;margin-left:3mm">Re-inspection required by: <span style="display:inline-block;border-bottom:.8px solid #888;width:30mm;vertical-align:bottom;height:4mm"></span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION J: SIGN-OFFS -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">J</span>
+        <span class="sec-title">Sign-Offs</span>
+        <span class="sec-note">Both parties must sign to confirm accuracy of the assessment</span>
+      </div>
+      <div class="signoff-body">
+        <div class="so-box">
+          <div class="so-title">Auditor / Inspector</div>
+          <div class="so-field">
+            <span class="so-lbl">Name:</span>
+            <span class="so-line"></span>
+          </div>
+          <div class="so-field">
+            <span class="so-lbl">Role / Title:</span>
+            <span class="so-line"></span>
+          </div>
+          <div class="so-field">
+            <span class="so-lbl">Company:</span>
+            <span class="so-line"></span>
+          </div>
+          <div class="so-field">
+            <span class="so-lbl">Date:</span>
+            <span class="so-line"></span>
+          </div>
+          <div class="sig-box"><span class="sig-lbl">Signature</span></div>
+        </div>
+        <div class="so-box">
+          <div class="so-title">STMS / Site Representative</div>
+          <div class="so-field">
+            <span class="so-lbl">Name:</span>
+            <span class="so-line"></span>
+          </div>
+          <div class="so-field">
+            <span class="so-lbl">STMS Cert No.:</span>
+            <span class="so-line"></span>
+          </div>
+          <div class="so-field">
+            <span class="so-lbl">Company:</span>
+            <span class="so-line"></span>
+          </div>
+          <div class="so-field">
+            <span class="so-lbl">Date:</span>
+            <span class="so-line"></span>
+          </div>
+          <div class="sig-box"><span class="sig-lbl">Signature</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="border:1px solid var(--border);border-radius:2px;padding:2.5mm 4mm;background:#f8f9fc;font-size:7pt;color:#666;line-height:1.6">
+      <strong style="color:var(--navy)">Classification Guide:</strong> &nbsp;
+      <strong style="color:#1b5e20">Compliant</strong> — all requirements met; &nbsp;
+      <strong style="color:#7b5800">Minor Non-Conformance</strong> — low safety risk, rectify within agreed timeframe; &nbsp;
+      <strong style="color:#b84700">Major Non-Conformance</strong> — significant risk, immediate management action required; &nbsp;
+      <strong style="color:#b71c1c">Critical Risk / Stop Work</strong> — imminent danger, work must cease until controlled.
+      &nbsp; This form must be retained as a site record and forwarded to the TMO and RCA within 24 hours of completion.
+    </div>
+
+  </div><!-- /form-body -->
+
+  <div class="form-footer">
+    <span class="ft-text">NZGTTM Site Assurance Form &mdash; For use by TMO, STMS, Corridor Managers and RCA Auditors</span>
+    <span class="ft-version">NZGTTM Site Assurance Form - Version 1.0</span>
+    <span class="ft-page">Page 3 of 3</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 4 — QUICK FIELD INSPECTION SUMMARY (1 page)
+     ============================================================ -->
+<div class="page">
+
+  <div class="qi-header">
+    <div class="hdr-logo">
+      <div class="logo-main">NZGTTM</div>
+      <div class="logo-sub">New Zealand Guide to TTM</div>
+    </div>
+    <div class="qi-title-area">
+      <div class="qi-title">Quick Field Inspection Summary</div>
+      <div class="qi-sub">Condensed one-page checklist for routine site visits &nbsp;·&nbsp; Use full SAF-1.0 form for formal audits</div>
+    </div>
+    <div class="hdr-ref" style="min-width:32mm">
+      <div class="ref-lbl">Form Ref</div>
+      <div class="ref-val">QFI-1.0</div>
+      <div class="ref-lbl" style="margin-top:1mm">NZGTTM</div>
+    </div>
+  </div>
+
+  <div class="qi-body">
+
+    <!-- Quick Details -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-badge">A</span>
+        <span class="sec-title">Site Details</span>
+      </div>
+      <table class="det-table">
+        <tr>
+          <td><span class="flbl">RCA:</span><span class="fline fline-md"></span></td>
+          <td><span class="flbl">Road / Location:</span><span class="fline fline-sm"></span></td>
+          <td><span class="flbl">Date:</span><span class="fline fline-xs"></span></td>
+          <td><span class="flbl">Time:</span><span class="fline fline-xs"></span></td>
+        </tr>
+        <tr>
+          <td><span class="flbl">TGS/TMP No.:</span><span class="fline fline-sm"></span></td>
+          <td><span class="flbl">STMS Name:</span><span class="fline fline-md"></span></td>
+          <td><span class="flbl">Inspector:</span><span class="fline fline-sm"></span></td>
+          <td><span class="flbl">Weather:</span><span class="fline fline-xs"></span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Quick sections grid -->
+    <div class="qi-sections">
+
+      <!-- B: Immediate Safety Risks -->
+      <div class="qi-section">
+        <div class="qi-sec-head" style="background:#7b1212">
+          <span class="qi-sec-badge" style="background:#c0392b">B</span>
+          Immediate Safety Risks &nbsp;<span style="font-size:6pt;opacity:.7">(YES = Risk Present)</span>
+        </div>
+        <div class="qi-sec-body">
+          <div class="qi-item"><span class="qi-item-txt">Workers exposed to live traffic</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Vehicle intrusion risk</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Unsafe pedestrian / cyclist route</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Visibility issues</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Emergency access compromised</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Plant operating unsafely</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+        </div>
+      </div>
+
+      <!-- C: TM Layout -->
+      <div class="qi-section">
+        <div class="qi-sec-head">
+          <span class="qi-sec-badge">C</span>
+          TM Layout &nbsp;<span style="font-size:6pt;opacity:.7">(YES = Compliant)</span>
+        </div>
+        <div class="qi-sec-body">
+          <div class="qi-item"><span class="qi-item-txt">Site matches approved TGS/TMP</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Signs correctly positioned, visible, legible</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Delineation adequate and correct</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Tapers appropriate for speed</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Temp speed management compliant</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Access points controlled</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+        </div>
+      </div>
+
+      <!-- D: VRU -->
+      <div class="qi-section">
+        <div class="qi-sec-head">
+          <span class="qi-sec-badge">D</span>
+          Vulnerable Road Users
+        </div>
+        <div class="qi-sec-body">
+          <div class="qi-item"><span class="qi-item-txt">Pedestrian route provided and accessible</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Cyclist accommodation provided</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Crossing facilities adequate</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Mobility-impaired users considered</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+        </div>
+      </div>
+
+      <!-- E+F: Traffic Ops + Worksite -->
+      <div class="qi-section">
+        <div class="qi-sec-head">
+          <span class="qi-sec-badge">E</span>
+          Traffic Operations &amp; Worksite Safety
+        </div>
+        <div class="qi-sec-body">
+          <div class="qi-item"><span class="qi-item-txt">Traffic flow operating safely</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Queues being managed effectively</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Sight distances adequate</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Crew briefed, wearing correct PPE</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Plant operating safely / excl. zones</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+          <div class="qi-item"><span class="qi-item-txt">Current TGS/TMP on site</span><div class="qi-cbs"><div class="qi-cb"><input type="checkbox">Y</div><div class="qi-cb"><input type="checkbox">N</div><div class="qi-cb"><input type="checkbox">N/A</div></div></div>
+        </div>
+      </div>
+
+    </div><!-- /qi-sections -->
+
+    <!-- Quick Assessment + Notes -->
+    <div class="qi-assessment">
+      <div class="qi-assess-head">Overall Field Assessment</div>
+      <div class="qi-assess-body">
+        <div>
+          <div style="font-size:7pt;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:2mm">Rating — select one:</div>
+          <div class="qi-rating-opts">
+            <label class="qi-ropt"><input type="checkbox"><span class="qi-ok">Compliant</span></label>
+            <label class="qi-ropt"><input type="checkbox"><span class="qi-min">Minor Non-Conformance</span></label>
+            <label class="qi-ropt"><input type="checkbox"><span class="qi-maj">Major Non-Conformance</span></label>
+            <label class="qi-ropt"><input type="checkbox"><span class="qi-crit">Critical Risk / Stop Work</span></label>
+          </div>
+          <div style="margin-top:2mm;font-size:7pt;font-weight:700;color:var(--navy);text-transform:uppercase">Full audit required?</div>
+          <div style="display:flex;gap:4mm;margin-top:1mm">
+            <label class="qi-ropt"><input type="checkbox"><span style="font-size:7.5pt;font-weight:600">Yes</span></label>
+            <label class="qi-ropt"><input type="checkbox"><span style="font-size:7.5pt;font-weight:600">No</span></label>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:7pt;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:1mm">Observations / Actions:</div>
+          <textarea class="comments-area" style="min-height:22mm;font-size:7.5pt" placeholder="Note issues, immediate actions or follow-ups required..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Sign-offs -->
+    <div class="qi-signoffs">
+      <div class="so-box">
+        <div class="so-title">Inspector</div>
+        <div class="so-field"><span class="so-lbl">Name:</span><span class="so-line"></span></div>
+        <div class="so-field"><span class="so-lbl">Date / Time:</span><span class="so-line"></span></div>
+        <div class="sig-box" style="height:11mm"><span class="sig-lbl">Signature</span></div>
+      </div>
+      <div class="so-box">
+        <div class="so-title">STMS / Site Rep</div>
+        <div class="so-field"><span class="so-lbl">Name:</span><span class="so-line"></span></div>
+        <div class="so-field"><span class="so-lbl">STMS Cert No.:</span><span class="so-line"></span></div>
+        <div class="sig-box" style="height:11mm"><span class="sig-lbl">Signature</span></div>
+      </div>
+    </div>
+
+  </div><!-- /qi-body -->
+
+  <div class="form-footer">
+    <span class="ft-text">Quick Field Inspection — use full SAF-1.0 for formal audits &nbsp;·&nbsp; Retain copy on site</span>
+    <span class="ft-version">NZGTTM Site Assurance Form - Version 1.0</span>
+    <span class="ft-page">QFI Page 1 of 1</span>
+  </div>
+</div>
+
+</body>
+</html>
